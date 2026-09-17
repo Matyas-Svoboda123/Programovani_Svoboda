@@ -8,7 +8,7 @@ public class BankAccount {
     private String uuid;
     private AccountOwner accountOwner;
     private String accountNumber;
-    private double balance;
+    protected double balance;
 
 
     public BankAccount(AccountOwner accountOwner, String accountNumber) {
@@ -24,6 +24,17 @@ public class BankAccount {
     }
 
     public BankAccount() {
+    }
+    public String getUuid() {
+        return uuid;
+    }
+
+    public AccountOwner getAccountOwner() {
+        return accountOwner;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     public double getBalance(){
