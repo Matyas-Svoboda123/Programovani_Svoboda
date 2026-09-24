@@ -1,5 +1,7 @@
 package account;
 
+import notifier.ConsoleNotifierService;
+import notifier.NotifierService;
 import person.AccountOwner;
 
 import java.util.UUID;
@@ -9,6 +11,7 @@ public class BankAccount {
     private AccountOwner accountOwner;
     private String accountNumber;
     protected double balance;
+    private NotifierService notifierService = new ConsoleNotifierService();
 
 
     public BankAccount(AccountOwner accountOwner, String accountNumber) {
@@ -39,6 +42,13 @@ public class BankAccount {
 
     public double getBalance(){
         return balance;
+    }
+    public void calculateInterest(){
+        double interest = balance * getInterest();
+        this.add(interest);
+    }
+    public float getInterest(){
+        return 0;
     }
 
     public void add(double amount){
