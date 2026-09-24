@@ -4,7 +4,7 @@ import person.AccountOwner;
 
 public class StudentAccount extends BankAccount{
     private String schoolName;
-    private double OVERDRAFT_LIMIT = -5000;
+    private double overdraftLimit = -5000;
     public StudentAccount(AccountOwner accountOwner, String accountNumber, String schoolName) {
         this(accountOwner, accountNumber,0,schoolName);
     }
@@ -17,7 +17,7 @@ public class StudentAccount extends BankAccount{
 
     @Override
     public void add(double amount) {
-        double bonusAmount = amount * 0.85;
+        double bonusAmount = amount * 0.05;
         super.add(bonusAmount);
         super.add(amount);
     }
@@ -27,7 +27,7 @@ public class StudentAccount extends BankAccount{
         if (amount < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
-        if (balance - amount < OVERDRAFT_LIMIT) {
+        if (balance - amount < overdraftLimit) {
             throw new IllegalArgumentException("Exceeded overdraft limit of 5000");
         }
         this.balance -= amount;
