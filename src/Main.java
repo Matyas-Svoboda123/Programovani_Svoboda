@@ -2,6 +2,7 @@ import accounts.*;
 import person.AccountOwner;
 import transfer.DepositTransferService;
 import transfer.WithdrawTransferService;
+import transfer.AccountTransferService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AccountOwner accountOwner = new AccountOwner("Tomas", "Pesek");
-        accountOwner.setLastName("Pokorny");
+        AccountOwner accountOwner = new AccountOwner("Matyáš", "Svoboda");
+        accountOwner.setLastName("Nový");
 
         BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 500);
         BankAccount studentAccount = new StudentAccount(accountOwner, "123", 500, "Delta");
@@ -61,6 +62,24 @@ public class Main {
         withdrawTransferService.withdraw(bankAccount, 400);
 
         printBalance(bankAccount);
+
+        //prevod mezi ucty - ukol
+
+        AccountOwner owner2 = new AccountOwner("Jan", "Novak");
+        BankAccount businessAccount = new BusinessAccount(accountOwner, "54", 450000);
+        BankAccount currentAccount2 = new CurrentAccount(owner2, "89", 100000);
+
+        System.out.println("BusinessAccount balance: " + businessAccount.getBalance());
+        System.out.println("CurrentAccount2 balance: " + currentAccount2.getBalance());
+
+        AccountTransferService accountTransferService = new AccountTransferService();
+
+        // prevod peněz
+        accountTransferService.transfer(businessAccount, currentAccount2, 35000);
+
+        System.out.println("BusinessAccount balance: " + businessAccount.getBalance());
+        System.out.println("CurrentAccount2 balance: " + currentAccount2.getBalance());
+
 
     }
 
