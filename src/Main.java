@@ -1,19 +1,21 @@
-import account.BankAccount;
-import account.CurrentAccount;
-import account.StudentAccount;
+import accounts.*;
 import person.AccountOwner;
+import transfer.DepositTransferService;
+import transfer.WithdrawTransferService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
+
         AccountOwner accountOwner = new AccountOwner("Tomas", "Pesek");
         accountOwner.setLastName("Pokorny");
 
         BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 500);
         BankAccount studentAccount = new StudentAccount(accountOwner, "123", 500, "Delta");
-        BankAccount savingAccount = new SavingAccount(accountOwner, "123");
+        BankAccount savingAccount = new SavingsAccount(accountOwner, "123");
 
 
         List<BankAccount> bankAccounts = new ArrayList<>();
@@ -22,8 +24,8 @@ public class Main {
 
 
         for (BankAccount account: bankAccounts){
-            if (account instanceof InterestPoint) {
-                ((InterestPoint)account).calculateInterest();
+            if (account instanceof InterestPoints) {
+                ((InterestPoints)account).calculateInterest();
             }
         }
 
@@ -60,9 +62,9 @@ public class Main {
 
         printBalance(bankAccount);
 
-
     }
-    private static void printBalance(BankAccount bankAccount){
+
+    private static void printBalance(BankAccount bankAccount) {
         System.out.println("balance: " + bankAccount.getBalance());
     }
 }

@@ -1,4 +1,4 @@
-package account;
+package accounts;
 
 import notifier.ConsoleNotifierService;
 import notifier.NotifierService;
@@ -26,19 +26,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public BankAccount() {
-    }
-    public String getUuid() {
-        return uuid;
-    }
 
-    public AccountOwner getAccountOwner() {
-        return accountOwner;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
 
     public double getBalance(){
         return balance;
@@ -65,5 +53,8 @@ public class BankAccount {
         }
         this.balance -= amount;
 
+    }
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

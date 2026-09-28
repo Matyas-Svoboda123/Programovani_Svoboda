@@ -1,4 +1,4 @@
-package account;
+package accounts;
 
 public interface InterestPoints {
     public void calculateInterest();
