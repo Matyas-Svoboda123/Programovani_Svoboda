@@ -5,12 +5,13 @@ import person.AccountOwner;
 public class SavingsAccount extends BankAccount{
     private static final float BONUS_RATE = 0.05f;
 
-    public SavingsAccount(AccountOwner accountOwner, String accountNumber) {
-        super(accountOwner, accountNumber);
+    public SavingsAccount(AccountOwner accountOwner, String accountNumber, String uuid)
+    {
+        super(accountOwner, accountNumber, uuid);
     }
 
-    public SavingsAccount(AccountOwner accountOwner, String accountNumber, double balance) {
-        super(accountOwner, accountNumber, balance);
+    public SavingsAccount(AccountOwner accountOwner, String accountNumber, String uuid, double balance) {
+        super(accountOwner, accountNumber, uuid, balance);
     }
 
     @Override

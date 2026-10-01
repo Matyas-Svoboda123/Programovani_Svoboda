@@ -14,17 +14,19 @@ public class BankAccount {
     private NotifierService notifierService = new ConsoleNotifierService();
 
 
-    public BankAccount(AccountOwner accountOwner, String accountNumber) {
-        this.uuid = UUID.randomUUID().toString();
+    public BankAccount(AccountOwner accountOwner, String accountNumber, String uuid) {
+        this.uuid = uuid;
         this.accountOwner = accountOwner;
         this.accountNumber = accountNumber;
         this.balance = 0;
     }
 
-    public BankAccount(AccountOwner accountOwner, String accountNumber, double balance){
-        this(accountOwner, accountNumber);
+    public BankAccount(AccountOwner accountOwner, String accountNumber, String uuid, double balance) {
+        this(accountOwner, accountNumber, uuid);
+
         this.balance = balance;
     }
+
 
 
 

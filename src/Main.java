@@ -1,89 +1,30 @@
 import accounts.*;
 import person.AccountOwner;
-import transfer.DepositTransferService;
-import transfer.WithdrawTransferService;
+import person.AccountOwnerFactory;
 import transfer.AccountTransferService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        AccountOwner accountOwner = new AccountOwner("Matyáš", "Svoboda");
-        accountOwner.setLastName("Nový");
+        AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
 
-        BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 500);
-        BankAccount studentAccount = new StudentAccount(accountOwner, "123", 500, "Delta");
-        BankAccount savingAccount = new SavingsAccount(accountOwner, "123");
+        AccountOwner accountOwner1 = accountOwnerFactory.createAccountOwner("Matyáš", "Svoboda");
+        AccountOwner accountOwner2 = accountOwnerFactory.createAccountOwner("Jan", "Novak");
 
+        BusinessAccountFactory businessAccountFactory = new BusinessAccountFactory();
+        CurrentAccountFactory currentAccountFactory = new CurrentAccountFactory();
 
-        List<BankAccount> bankAccounts = new ArrayList<>();
-        bankAccounts.add(bankAccount);
-        bankAccounts.add(studentAccount);
-
-
-        for (BankAccount account: bankAccounts){
-            if (account instanceof InterestPoints) {
-                ((InterestPoints)account).calculateInterest();
-            }
-        }
-
-        for (BankAccount account: bankAccounts){
-
-            if (account instanceof StudentAccount) {
-                StudentAccount stdAccount = (StudentAccount) account;
-                System.out.println("school: " + stdAccount.getSchoolName());
-            }
-
-            System.out.println("balance: " + account.getBalance());
-
-        }
-
-
-        printBalance(bankAccount);
-
-        DepositTransferService depositTransferService = new DepositTransferService();
-        depositTransferService.deposit(bankAccount, 400);
-        depositTransferService.deposit(bankAccount, 100);
-        depositTransferService.deposit(bankAccount, 200);
-        depositTransferService.deposit(bankAccount, 600);
-
-        printBalance(bankAccount);
-
-        WithdrawTransferService withdrawTransferService = new WithdrawTransferService();
-
-        withdrawTransferService.withdraw(bankAccount, 300);
-        withdrawTransferService.withdraw(bankAccount, 300);
-
-        withdrawTransferService.withdraw(bankAccount, 100);
-        withdrawTransferService.withdraw(bankAccount, 50);
-        withdrawTransferService.withdraw(bankAccount, 400);
-
-        printBalance(bankAccount);
-
-        //prevod mezi ucty - ukol
-
-        AccountOwner owner2 = new AccountOwner("Jan", "Novak");
-        BankAccount businessAccount = new BusinessAccount(accountOwner, "54", 450000);
-        BankAccount currentAccount2 = new CurrentAccount(owner2, "89", 100000);
+        BankAccount businessAccount = businessAccountFactory.createBusinessAccountWithBalance(accountOwner1, 450000);
+        BankAccount currentAccount2 = currentAccountFactory.createCurrentAccountWithBalance(accountOwner2, 100000);
 
         System.out.println("BusinessAccount balance: " + businessAccount.getBalance());
         System.out.println("CurrentAccount2 balance: " + currentAccount2.getBalance());
 
         AccountTransferService accountTransferService = new AccountTransferService();
-
-        // prevod peněz
-        accountTransferService.transfer(businessAccount, currentAccount2, 35000);
+        accountTransferService.transfer(businessAccount, currentAccount2, 25000);
 
         System.out.println("BusinessAccount balance: " + businessAccount.getBalance());
         System.out.println("CurrentAccount2 balance: " + currentAccount2.getBalance());
-
-
-    }
-
-    private static void printBalance(BankAccount bankAccount) {
-        System.out.println("balance: " + bankAccount.getBalance());
     }
 }
