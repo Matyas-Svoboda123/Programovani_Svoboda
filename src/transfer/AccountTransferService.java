@@ -1,11 +1,12 @@
 package transfer;
 
 import accounts.BankAccount;
-import accounts.BusinessAccount;
+import accounts.StudentAccount;
+import service.FeeService;
 
 public class AccountTransferService {
 
-    private static final double BUSINESS_TRANSFER_FEE = 0.003; // 0.3% fee
+    private final FeeService feeService = new FeeService();
 
     public void transfer(BankAccount fromAccount, BankAccount toAccount, double amount) {
         if (fromAccount == null || toAccount == null) {
@@ -20,14 +21,25 @@ public class AccountTransferService {
             throw new IllegalArgumentException("Transfer amount must be bigger than zero.");
         }
 
-        double amountToDeposit = amount;
+        double totalDeduction = feeService.getTotalDeductionAmount(fromAccount, amount);
 
-        if (fromAccount instanceof BusinessAccount) {
-            double fee = amount * BUSINESS_TRANSFER_FEE;
-            amountToDeposit = amount - fee;
+        // Kontrola povoleného limitu
+        double minAllowedBalance = getMinAllowedBalance(fromAccount);
+        if (fromAccount.getBalance() - totalDeduction < minAllowedBalance) {
+            throw new IllegalArgumentException("Insufficient funds for transfer. Account limit exceeded.");
         }
+
+        double fee = feeService.getTransferFee(fromAccount, amount);
+        double amountToDeposit = amount - fee;
 
         fromAccount.sub(amount);
         toAccount.add(amountToDeposit);
+    }
+
+    private double getMinAllowedBalance(BankAccount account) {
+        if (account instanceof StudentAccount) {
+            return -5000.0;
+        }
+        return 0.0;
     }
 }

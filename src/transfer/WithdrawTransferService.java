@@ -1,34 +1,28 @@
 package transfer;
+
 import accounts.BankAccount;
-import accounts.BusinessAccount;
 import accounts.StudentAccount;
+import service.FeeService;
 
 public class WithdrawTransferService {
 
-    private static final double BUSINESS_ACCOUNT_SERVICE_FEE = 0.01;
+    private final FeeService feeService = new FeeService();
 
     public void withdraw(BankAccount account, double amount) {
-        double newBalance = account.getBalance() - amount;
+        double serviceFee = feeService.getWithdrawFee(account, amount);
+        double newBalance = account.getBalance() - amount - serviceFee;
 
-        if (account instanceof BusinessAccount) {
-            double serviceFee = amount * BUSINESS_ACCOUNT_SERVICE_FEE;
-
-            newBalance -= serviceFee;
-        }
-
-        if (newBalance < getWithDrawLimit(account)) {
+        if (newBalance < getWithdrawLimit(account)) {
             throw new IllegalArgumentException("Cannot subtract negative amount");
         }
 
         account.setBalance(newBalance);
     }
 
-    private int getWithDrawLimit(BankAccount account) {
+    private int getWithdrawLimit(BankAccount account) {
         if (account instanceof StudentAccount) {
             return -5000;
         }
-
         return 0;
     }
-
 }

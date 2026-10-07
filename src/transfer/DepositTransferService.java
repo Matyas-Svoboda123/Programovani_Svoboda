@@ -1,22 +1,16 @@
 package transfer;
 
 import accounts.BankAccount;
-import accounts.StudentAccount;
+import service.FeeService;
 
 public class DepositTransferService {
 
-    private static final double STUDENT_ACCOUNT_DEPOSIT_BONUS = 0.005;
+    private final FeeService feeService = new FeeService();
 
     public void deposit(BankAccount bankAccount, double amount) {
-        double newBalance = bankAccount.getBalance() + amount;
-
-        if (bankAccount instanceof StudentAccount) {
-            double depositBonus = amount * STUDENT_ACCOUNT_DEPOSIT_BONUS;
-
-            newBalance += depositBonus;
-        }
+        double depositBonus = feeService.getDepositBonus(bankAccount, amount);
+        double newBalance = bankAccount.getBalance() + amount + depositBonus;
 
         bankAccount.setBalance(newBalance);
     }
-
 }
