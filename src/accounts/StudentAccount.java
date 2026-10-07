@@ -2,25 +2,20 @@ package accounts;
 
 import person.AccountOwner;
 
-public class StudentAccount extends BankAccount{
+public class StudentAccount extends BankAccount {
     private String schoolName;
     private double overdraftLimit = -5000;
+
     public StudentAccount(AccountOwner accountOwner, String accountNumber, String schoolName, String uuid) {
-        this(accountOwner, accountNumber,0,schoolName, uuid);
+        this(accountOwner, accountNumber, 0, schoolName, uuid);
     }
 
     public StudentAccount(AccountOwner accountOwner, String accountNumber, double balance, String schoolName, String uuid) {
         super(accountOwner, accountNumber, uuid, balance);
         this.schoolName = schoolName;
-
     }
 
-    @Override
-    public void add(double amount) {
-        double bonusAmount = amount * 0.05;
-        super.add(bonusAmount);
-        super.add(amount);
-    }
+    // Bonus k vkladu řeší FeeService (DepositTransferService), proto zde add() nepřepisujeme.
 
     @Override
     public void sub(double amount) {

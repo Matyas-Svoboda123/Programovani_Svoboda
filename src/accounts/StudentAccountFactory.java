@@ -13,7 +13,7 @@ public class StudentAccountFactory {
         return new StudentAccount(accountOwner, accountNumber, schoolName, uuid);
     }
 
-    public StudentAccount createStudentAccountWithBalance(String schoolName, AccountOwner accountOwner, double balance) {
+    public StudentAccount createStudentAccountWithBalance(AccountOwner accountOwner, String schoolName, double balance) {
         String uuid = UUID.randomUUID().toString();
         String accountNumber = AccountNumberGenerator.generateAccountNumber();
 

@@ -2,11 +2,10 @@ package accounts;
 
 import person.AccountOwner;
 
-public class SavingsAccount extends BankAccount{
-    private static final float BONUS_RATE = 0.05f;
+public class SavingsAccount extends BankAccount {
+    private static final double BONUS_RATE = 0.005; // 0,5 % bonus k vkladu
 
-    public SavingsAccount(AccountOwner accountOwner, String accountNumber, String uuid)
-    {
+    public SavingsAccount(AccountOwner accountOwner, String accountNumber, String uuid) {
         super(accountOwner, accountNumber, uuid);
     }
 
@@ -19,8 +18,6 @@ public class SavingsAccount extends BankAccount{
         if (amount < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
-        double newAmount = amount * 1.005;
-        super.add(newAmount);
+        super.add(amount * (1 + BONUS_RATE));
     }
-
 }

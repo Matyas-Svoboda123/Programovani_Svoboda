@@ -4,15 +4,12 @@ import notifier.ConsoleNotifierService;
 import notifier.NotifierService;
 import person.AccountOwner;
 
-import java.util.UUID;
-
-public class BankAccount {
+public class BankAccount implements InterestPoints {
     private String uuid;
     private AccountOwner accountOwner;
     private String accountNumber;
     protected double balance;
     private NotifierService notifierService = new ConsoleNotifierService();
-
 
     public BankAccount(AccountOwner accountOwner, String accountNumber, String uuid) {
         this.uuid = uuid;
@@ -23,39 +20,52 @@ public class BankAccount {
 
     public BankAccount(AccountOwner accountOwner, String accountNumber, String uuid, double balance) {
         this(accountOwner, accountNumber, uuid);
-
         this.balance = balance;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
 
+    public AccountOwner getAccountOwner() {
+        return accountOwner;
+    }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
-    public double getBalance(){
+    public double getBalance() {
         return balance;
     }
-    public void calculateInterest(){
+
+    @Override
+    public void calculateInterest() {
         double interest = balance * getInterest();
         this.add(interest);
     }
-    public float getInterest(){
+
+    public float getInterest() {
         return 0;
     }
 
-    public void add(double amount){
-        if(amount < 0){
-            throw new IllegalArgumentException("Ammount cannot be negative");
+    public void add(double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
         }
-
         this.balance += amount;
     }
-    public void sub(double amount){
-        double newBalance = balance - amount;
-        if(newBalance < 0){
-            throw new IllegalArgumentException("Cannot substract negative amount");
+
+    public void sub(double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
+        if (balance - amount < 0) {
+            throw new IllegalArgumentException("Insufficient funds");
         }
         this.balance -= amount;
-
     }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
