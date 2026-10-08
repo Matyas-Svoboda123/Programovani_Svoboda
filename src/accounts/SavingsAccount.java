@@ -3,8 +3,7 @@ package accounts;
 import person.AccountOwner;
 
 public class SavingsAccount extends BankAccount {
-    private static final double BONUS_RATE = 0.005; // 0,5 % bonus k vkladu
-
+    private static final double BONUS_RATE = 0.005;
     public SavingsAccount(AccountOwner accountOwner, String accountNumber, String uuid) {
         super(accountOwner, accountNumber, uuid);
     }
